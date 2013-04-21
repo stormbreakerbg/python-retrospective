@@ -7,11 +7,6 @@ def groupby(func, seq):
             for key in (func(item) for item in seq)}
 
 
-def compose(func1, func2):
-    """ Return the composition of two functions. """
-    return lambda arg: func1(func2(arg))
-
-
 def iterate(func):
     """Return the iteration of `func`.
 
@@ -21,6 +16,11 @@ def iterate(func):
     The first element is the identity function.
 
     """
+
+    def compose(func1, func2):
+        """ Return the composition of two functions. """
+        return lambda arg: func1(func2(arg))
+
     current_composition_func = lambda x: x
 
     while True:
@@ -33,14 +33,7 @@ def zip_with(func, *iterables):
     func applied to the nth elements of all iterables.
 
     """
-    if len(iterables) == 0:
-        return
-
-    iterators = [iter(iterable) for iterable in iterables]
-
-    while True:
-        values = [next(iterator) for iterator in iterators]
-        yield func(*values)
+    return [func(*line) for line in zip(*iterables)]
 
 
 def cache(func, cache_size):
