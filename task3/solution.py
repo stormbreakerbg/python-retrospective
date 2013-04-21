@@ -2,75 +2,23 @@ class Person:
     """Model of a person with parents and children."""
 
     def __init__(self, name, birth_year, gender, mother=None, father=None):
-        self._mother = None
-        self._father = None
+        self.mother = mother
+        if mother is not None:
+            self.mother._children.add(self)
+
+        self.father = father
+        if father is not None:
+            self.father._children.add(self)
 
         self.name = name
         self.birth_year = birth_year
         self.gender = gender
-
-        if mother is not None:
-            self.mother = mother
-        if father is not None:
-            self.father = father
-
         self._children = set()
-
-    @property
-    def mother(self):
-        return self._mother
-
-    @mother.setter
-    def mother(self, new_mother):
-        """Set mother, removing the connection to a previous one."""
-        del self.mother
-
-        if self.birth_year - new_mother.birth_year < 18:
-            raise ValueError("The parent must be at least 18 years older "
-                             "than the child")
-
-        self._mother = new_mother
-        self._mother._children.add(self)
-
-    @mother.deleter
-    def mother(self):
-        """Remove the connection to the mother."""
-        if self._mother is not None:
-            self._mother._children.remove(self)
-
-        self._mother = None
-
-    @property
-    def father(self):
-        return self._father
-
-    @father.setter
-    def father(self, new_father):
-        """Set father, removing the connection to a previous one."""
-        del self.father
-
-        if self.birth_year - new_father.birth_year < 18:
-            raise ValueError("The parent must be at least 18 years older "
-                             "than the child")
-
-        self._father = new_father
-        self._father._children.add(self)
-
-    @father.deleter
-    def father(self):
-        """Remove the connection to the father."""
-        if self._father is not None:
-            self._father._children.remove(self)
-
-        self._father = None
 
     def children(self, gender=None):
         """Return all children of this person, optionally filtered by gender"""
-        if gender is not None:
-            return [child for child in self._children
-                    if child.gender == gender]
-        else:
-            return list(self._children)
+        return [child for child in self._children
+                if gender is None or child.gender == gender]
 
     def _get_siblings(self, gender=None):
         """Return all siblings of this person.
