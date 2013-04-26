@@ -4,16 +4,16 @@ class Person:
     def __init__(self, name, birth_year, gender, mother=None, father=None):
         self.mother = mother
         if mother is not None:
-            self.mother._children.add(self)
+            self.mother._children.append(self)
 
         self.father = father
         if father is not None:
-            self.father._children.add(self)
+            self.father._children.append(self)
 
         self.name = name
         self.birth_year = birth_year
         self.gender = gender
-        self._children = set()
+        self._children = []
 
     def children(self, gender=None):
         """Return all children of this person, optionally filtered by gender"""
