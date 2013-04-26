@@ -21,8 +21,8 @@ class TicTacToeBoard:
 
     def __init__(self):
         self._game_board = {column + row: ' '
-                            for row in ['1', '2', '3']
-                            for column in ['A', 'B', 'C']}
+                            for row in ('1', '2', '3')
+                            for column in ('A', 'B', 'C')}
         self._next_turn = None
         self._winner = None
 
@@ -59,7 +59,7 @@ class TicTacToeBoard:
         if len(index) != 2:
             raise InvalidKey("The length of the key must be 2 symbols")
 
-        if index[0] not in ['A', 'B', 'C'] or index[1] not in ['1', '2', '3']:
+        if index[0] not in ('A', 'B', 'C') or index[1] not in ('1', '2', '3'):
             raise InvalidKey("The first symbol should be A, B or C, and the "
                              "second one should be 1, 2 or 3.")
 
