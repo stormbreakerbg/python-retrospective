@@ -33,7 +33,7 @@ def zip_with(func, *iterables):
     func applied to the nth elements of all iterables.
 
     """
-    return [func(*line) for line in zip(*iterables)]
+    return (func(*line) for line in zip(*iterables))
 
 
 def cache(func, cache_size):
